@@ -30,6 +30,8 @@ ROOT.gStyle.SetLineWidth(1)
 ROOT.gStyle.SetOptTitle(1)
 ROOT.gStyle.SetOptStat(0)
 
+CE65_SUBMATRIX_EDGE = [21, 42, 64]
+
 class CorryPainter(Painter):
   """ROOT Painter for histograms output from corryvreckan
   Support modules:
@@ -94,7 +96,6 @@ def DrawClusteringAnalog(self, dirCluster, nextPage=True, suffix=''):
   # Init
   if(nextPage):
     self.pageName = f"ClusteringAnalog - {detector}"
-    print(self.pageName)
   # Drawing
   hMap = dirCluster.Get("clusterPositionLocal")
   self.DrawHist(hMap, option="colz")
@@ -124,137 +125,139 @@ def DrawClusteringAnalog(self, dirCluster, nextPage=True, suffix=''):
   if(nNoisy < 10): pavePixel.Draw('same')
 
   hSize = dirCluster.Get("clusterSize")
-  if(hSize):
-    hSize.GetXaxis().SetRangeUser(0,25)
-    self.DrawHist(hSize, "clusterSize", optLogY=True, optStat=True)
-  else:
-    pass
+  hSize.GetXaxis().SetRangeUser(0,25)
+  self.DrawHist(hSize, "clusterSize", optLogY=True, optStat=True)
+  # ROOT.gStyle.SetOptStat(1101)
+  # gStyle->SetOptStat(1101)
+  # self.DrawHist(hSize, "clusterSize", optLogY=True, optStat=True)
 
   hSize = dirCluster.Get("clusterCharge")
-  if(hSize):
-    hSize.Rebin(int(args.CHARGE_BINWIDTH / hSize.GetBinWidth(1)))
-    hSize.GetXaxis().SetRangeUser(-0.05 * args.CHARGE_MAX,args.CHARGE_MAX)
-    self.DrawHist(hSize, "clusterSize", optLogY=True)
-  else:
-    pass
+  hSize.Rebin(int(args.CHARGE_BINWIDTH / hSize.GetBinWidth(1)))
+  hSize.GetXaxis().SetRangeUser(-0.05 * args.CHARGE_MAX,args.CHARGE_MAX)
+  self.DrawHist(hSize, "clusterCharge", optLogY=True)
 
   hSize = dirCluster.Get("clusterSeedCharge")
-  if(hSize):
-    hSize.Rebin(int(args.CHARGE_BINWIDTH  / hSize.GetBinWidth(1)))
-    hSize.GetXaxis().SetRangeUser(0,args.CHARGE_MAX)
-    self.DrawHist(hSize, "clusterSize", optLogY=True)
-  else:
-    pass
+  hSize.Rebin(int(args.CHARGE_BINWIDTH  / hSize.GetBinWidth(1)))
+  hSize.GetXaxis().SetRangeUser(0,args.CHARGE_MAX)
+  self.DrawHist(hSize, "clusterSeedCharge", optLogY=True)
 
   hSize = dirCluster.Get("clusterNeighborsCharge")
-  if(hSize):
-    hSize.Rebin(int(args.CHARGE_BINWIDTH  / hSize.GetBinWidth(1)))
-    hSize.GetXaxis().SetRangeUser(-0.05 * args.CHARGE_MAX, args.CHARGE_MAX)
-    self.DrawHist(hSize, "clusterSize", optLogY=True)
-  else:
-    pass
+  hSize.Rebin(int(args.CHARGE_BINWIDTH  / hSize.GetBinWidth(1)))
+  hSize.GetXaxis().SetRangeUser(-0.05 * args.CHARGE_MAX, args.CHARGE_MAX)
+  self.DrawHist(hSize, "clusterNeighborsCharge", optLogY=True)
+
   hSize = dirCluster.Get("clusterNeighborsChargeSum")
-  if(hSize):
-    hSize.Rebin(int(args.CHARGE_BINWIDTH  / hSize.GetBinWidth(1)))
-    hSize.GetXaxis().SetRangeUser(-0.05 * args.CHARGE_MAX,args.CHARGE_MAX)
-    self.DrawHist(hSize, "Cluster neighbors charge", optLogY=True)
-  else:
-    pass
+  hSize.Rebin(int(args.CHARGE_BINWIDTH  / hSize.GetBinWidth(1)))
+  hSize.GetXaxis().SetRangeUser(-0.05 * args.CHARGE_MAX,args.CHARGE_MAX)
+  self.DrawHist(hSize, "Cluster neighbors charge", optLogY=True)
+
   hSize = dirCluster.Get("clusterSeedSNR")
-  if(hSize):
+  if (hSize): 
     hSize.Rebin(int(1 / hSize.GetBinWidth(1)))
     hSize.GetXaxis().SetRangeUser(0,100)
     hSize.GetYaxis().SetRangeUser(0,hSize.GetMaximum() * 1.2)
     self.DrawHist(hSize, "clusterSeedSNR")
   else:
-    pass
+  	pass
+  
   hSize = dirCluster.Get("clusterNeighborsSNR")
-  if(hSize):
+  if(hSize): 
     hSize.GetXaxis().SetRangeUser(-3,20)
     self.DrawHist(hSize, "clusterNeighborsSNR", optLogY=False)
   else:
     pass
+
   hMap = dirCluster.Get("clusterCharge_SeedvsNeighbors")
-  if(hMap):
+  if (hMap):
     hMap.GetXaxis().SetRangeUser(-0.1 * args.CHARGE_MAX, args.CHARGE_MAX)
     hMap.GetYaxis().SetRangeUser(-0.1 * args.CHARGE_MAX,args.CHARGE_MAX)
     self.DrawHist(hMap, "clusterCharge_SeedvsNeighbors", "colz", False)
   else:
     pass
+
   hMap = dirCluster.Get("clusterSNR_SeedvsNeighbors")
-  if(hMap):
+  if (hMap):
     hMap.GetYaxis().SetRangeUser(-1,10)
     self.DrawHist(hMap, "clusterSNR_SeedvsNeighbors", "colz", False)
   else:
     pass
+
   hMap = dirCluster.Get("clusterCharge_SeedvsNeighborsSum")
-  if(hMap):
+  if (hMap):
     hMap.GetXaxis().SetRangeUser(-0.1 * args.CHARGE_MAX, args.CHARGE_MAX)
     hMap.GetYaxis().SetRangeUser(-0.1 * args.CHARGE_MAX, args.CHARGE_MAX)
     self.DrawHist(hMap, "clusterCharge_SeedvsNeighborsSum", "colz", False)
   else:
     pass
+
   hMap = dirCluster.Get("clusterCharge_SeedvsCluster")
-  if(hMap):
+  if (hMap):
     hMap.GetXaxis().SetRangeUser(-0.1 * args.CHARGE_MAX, args.CHARGE_MAX)
     hMap.GetYaxis().SetRangeUser(-0.1 * args.CHARGE_MAX,args.CHARGE_MAX)
     self.DrawHist(hMap, "clusterCharge_SeedvsCluster", "colz", False)
   else:
     pass
+
   hMap = dirCluster.Get("clusterSeedSNRvsClusterCharge")
-  if(hMap):
+  if (hMap):
     hMap.GetYaxis().SetRangeUser(-0.1 * args.CHARGE_MAX, args.CHARGE_MAX)
     self.DrawHist(hMap, "clusterSeedSNRvsClusterCharge", "colz", False)
   else:
     pass
+  
   # Cluster shape
   hSize = dirCluster.Get("clusterShape_SeedCut")
-  if(hSize):
+  if (hSize):
     hSize.GetXaxis().SetRangeUser(0,10)
     self.draw_text(0.58, 0.55, 0.85, 0.85, f'Average size: {hSize.GetMean()}')
     self.DrawHist(hSize, "clusterShape_SeedCut")
   else:
     pass
+
   hMap = dirCluster.Get("clusterShape_Charge_LocalIndex")
-  if(hMap):
+  if (hMap):
     hMap.GetXaxis().SetRangeUser(-5,5)
     hMap.GetYaxis().SetRangeUser(-0.1 * args.CHARGE_MAX, args.CHARGE_MAX)
     self.DrawHist(hMap, "clusterShape_Charge_LocalIndex", "colz", False)
   else:
     pass
+
   hMap = dirCluster.Get("clusterShape_Charge_SortedIndex")
-  if(hMap):
+  if (hMap):
     hMap.GetXaxis().SetRangeUser(0,10)
     hMap.GetYaxis().SetRangeUser(-0.1 * args.CHARGE_MAX, args.CHARGE_MAX)
     self.DrawHist(hMap, "clusterShape_Charge_SortedIndex", "colz", optNormY=True)
   else:
     pass
+
   hMap = dirCluster.Get("clusterShape_SNR_LocalIndex")
-  if(hMap):
+  if (hMap):
     hMap.GetXaxis().SetRangeUser(-5,5)
     self.DrawHist(hMap, "clusterShape_SNR_LocalIndex", "colz", False)
   else:
     pass
+
   hMap = dirCluster.Get("clusterShape_SNR_SortedIndex")
-  if(hMap):
+  if (hMap):
     hMap.GetXaxis().SetRangeUser(0,10)
     self.DrawHist(hMap, "clusterShape_SNR_SortedIndex", "colz", False, optNormY=True)
   else:
     pass
+
   # Charge sharing (ratio distribution in local window)
   hMap = dirCluster.Get("clusterShape_ChargeRatio_LocalIndex")
-  if(hMap):
+  if (hMap):
     hMap.GetXaxis().SetRangeUser(-5,5)
     hMap.GetYaxis().SetRangeUser(-0.05,1.2)
     hPx = hMap.ProfileX() # TODO: Re-normalized with counts in seed
     hPx.SetLineColor(ROOT.kBlack)
-    hPx.SetLineStyle(ROOT.kDashDotted) # dash-dot
-    hPx.SetMarkerColor(ROOT.kBlack)
+    hPx.SetLineStyle(ROOT.kDashDotted) # dash-dothPx.SetMarkerColor(ROOT.kBlack)
     hPx.SetLineWidth(3)
     self.DrawHist(hMap, "clusterShape_ChargeRatio_LocalIndex", "colz", optNormY=True)
     hPx.Draw("same")
   else:
     pass
+
   # plot 2D map of charge fractions in pixel
   windowSize = 3.0
   hRatioMean = self.new_obj(ROOT.TH2D(
@@ -399,6 +402,8 @@ def DrawDUTAssociation(self, dirAna):
   self.DrawHist(htmp, optGaus=True)
   htmp = dirAna.Get('hResidualY')
   self.DrawHist(htmp, optGaus=True)
+  htmp = dirAna.Get('hDistTrackToClusterCentrePos_beforeCut')
+  self.DrawHist(htmp, "distance before cut")
   # Output
   self.NextPage()
   return None
@@ -486,6 +491,41 @@ def DrawAnalysisDUT(self, dirAna, nextPage=True):
   hSigX = dirAna.Get("global_residuals").Get("residualsY")
   hSigX.Rebin(int(1. / hSigX.GetBinWidth(1)))
   self.DrawHist(hSigX, optGaus=True)
+  self.NextRow()
+  # track to cluster distance:all
+  htemp = dirAna.Get("hDistTrackToAssocCluster")
+  htemp.GetXaxis().SetRangeUser(-10,100)
+  self.DrawHist(htemp, "distance between track and cluster: before cut")
+  # track to cluster distance:closest
+  htemp = dirAna.Get("hDistTrackToAssocCluster_after")
+  htemp.GetXaxis().SetRangeUser(-10,100)
+  self.DrawHist(htemp, "distance between track and cluster: after cut")
+  # track to cluster distanceX:all
+  htemp = dirAna.Get("hDistTrackToAssocClusterX")
+  htemp.GetXaxis().SetRangeUser(-100,100)
+  self.DrawHist(htemp)
+  # track to cluster distanceX:closest
+  htemp = dirAna.Get("hDistTrackToAssocClusterX_after")
+  htemp.GetXaxis().SetRangeUser(-100,100)
+  self.DrawHist(htemp)
+  self.NextRow()
+  # track to cluster distanceY:all
+  htemp = dirAna.Get("hDistTrackToAssocClusterY")
+  htemp.GetXaxis().SetRangeUser(-100,100)
+  self.DrawHist(htemp)
+  # track to cluster distanceY:closest
+  htemp = dirAna.Get("hDistTrackToAssocClusterY_after")
+  htemp.GetXaxis().SetRangeUser(-100,100)
+  self.DrawHist(htemp)
+  # track to cluster distance vs track no:all
+  htemp = dirAna.Get("hDistTrackToAssocClusterVsTrackNo")
+  htemp.GetXaxis().SetRangeUser(-50,5000)
+  self.DrawHist(htemp, option="colz", optLogZ=True)
+  # track to cluster distance vs track no:closest
+  htemp = dirAna.Get("hDistTrackToAssocClusterVsTrackNo_after")
+  htemp.GetXaxis().SetRangeUser(-50,5000)
+  self.DrawHist(htemp, option="colz", optLogZ=True)
+  
   # Output
   if(nextPage): self.NextPage()
   return None
