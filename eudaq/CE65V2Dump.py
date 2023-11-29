@@ -201,7 +201,7 @@ for iev in tqdm(range(args.nev)):
   for sev in sevs:
     fr_no = sev.GetNumBlock()
     # print("before", fr_no)
-    if fr_no > 4: continue
+    if fr_no != 4: continue
     # print("after", fr_no)
     # Event number check (mismatch during data taking)
     if(args.debug and abs(sev.GetTriggerN() - trigNo) > EV_TRIGGER_DIFF):
