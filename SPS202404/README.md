@@ -1,17 +1,31 @@
-The analysis can be run using the https://github.com/Edler1/UZH_CE65_Documentation/tree/main repository:
+The analysis can be run using the script in `https://github.com/Edler1/UZH_CE65_Documentation/tree/main/testbeam_analysis`
 
-First, start the docker container using [run_container.sh](https://github.com/Edler1/UZH_CE65_Documentation/blob/main/testbeam_analysis/run_container.sh).
+The scripts in the `testbeam_analysis` rely on an `ITS3utils` directory that should exist as a subdirectory of where the code is being run. 
 
-Inside docker, you still may need to install tqdm in the container using
+To set up for the analysis, put the data files into ITS3utils/SPS202404/data/<CHIPNAME>. The files can be manually scp'd or copied using 
 ```
-pip install tqdm
+./copy_tb_files.sh 
+```
+where the user will be prompted for a username and a password to copy the files. The chips for which data should be copied can be specified by uncomment the relevant lines in `copy_tb_files.sh`. e.g. for pcb18 this would be 
+```
+# chips["pcb18"]="STD225SQ" -> chips["pcb18"]="STD225SQ"
 ```
 
-Then put the data files into ITS3utils/SPS202404/data/<CHIPNAME> and run using 
+The analysis must be run within a docker container. First, start the docker container using [run_container.sh](https://github.com/Edler1/UZH_CE65_Documentation/blob/main/testbeam_analysis/run_container.sh):
 ```
-sh UZH_CE65_Documentation/testbeam_analysis/run_tb_analysis.sh
+./run_container.sh
 ```
-you can give an optional .txt file with chip-specific run settings as
+The working directory is defined as wherever the script is run from. The only important thing is that `ITS3utils` be a visible subdirectory of the working directory. 
+
+
+The analysis is run by calling
 ```
-sh UZH_CE65_Documentation/testbeam_analysis/run_tb_analysis_new.sh UZH_CE65_Documentation/testbeam_analysis/params/GAP225SQ_SPS.txt
+./run_tb_analysis.sh
+
+```
+The parameters of the analysis are defined in the beginning of the script.
+
+Alternatively, paramters can be provided as a command line option via a .txt file. There are several examples in the `https://github.com/Edler1/UZH_CE65_Documentation/blob/main/testbeam_analysis/params` directories:
+```
+./run_tb_analysis.sh params/GAP225SQ_SPS.txt
 ```
