@@ -1,4 +1,4 @@
-The analysis can be run using the script in `https://github.com/Edler1/UZH_CE65_Documentation/tree/main/testbeam_analysis`
+The analysis can be run using the scripts in [`https://github.com/Edler1/UZH_CE65_Documentation/tree/main/testbeam_analysis`](https://github.com/Edler1/UZH_CE65_Documentation/tree/main/testbeam_analysis)
 
 The scripts in the `testbeam_analysis` rely on an `ITS3utils` directory that should exist as a subdirectory of where the code is being run. 
 
@@ -6,7 +6,7 @@ To set up for the analysis, put the data files into ITS3utils/SPS202404/data/<CH
 ```
 ./copy_tb_files.sh 
 ```
-where the user will be prompted for a username and a password to copy the files. The chips for which data should be copied can be specified by uncomment the relevant lines in `copy_tb_files.sh`. e.g. for pcb18 this would be 
+where the user will be prompted for a username and a password to copy the files. The chips for which data should be copied can be specified by uncommenting the relevant lines in `copy_tb_files.sh`. e.g. for pcb18 this would be 
 ```
 # chips["pcb18"]="STD225SQ" -> chips["pcb18"]="STD225SQ"
 ```
