@@ -292,7 +292,7 @@ with open(f'{args.output}_mask.txt','w') as maskFile:
     maskFile.write(f'p\t{ix}\t{iy}\n')
   print(f'[-] Mask file write to {maskFile.name} ({args.mask})')
 
-cmd = input("Exit after checking plots: <type enter>")
+# cmd = input("Exit after checking plots: <type enter>")
 c.SaveAs(f'{args.output}.pdf')
 
 outputFile = ROOT.TFile(f'{args.output}.root','RECREATE')
