@@ -12,7 +12,7 @@ material_budget = 0.001
 coordinates = "cartesian"
 orientation_mode = "xyz"
 # orientation = 180deg, 180deg, 0deg
-mask_file="/local/ITS3utils/DESY202311/masks/ref-plane0.txt"
+mask_file="../../../ITS3utils/DESY202311/masks/ref-plane0.txt"
 orientation = 0deg, 0deg, 0deg
 role = "reference"
 
@@ -27,7 +27,7 @@ material_budget = 0.0005
 coordinates = "cartesian"
 orientation_mode = "xyz"
 # orientation = 180deg, 180deg, 0deg
-mask_file="/local/ITS3utils/DESY202311/masks/ref-plane1.txt"
+mask_file="../../../ITS3utils/DESY202311/masks/ref-plane1.txt"
 orientation = 0deg, 0deg, 0deg
 
 [ALPIDE_2]
@@ -41,7 +41,7 @@ material_budget = 0.0005
 coordinates = "cartesian"
 orientation_mode = "xyz"
 # orientation = 180deg, 180deg, 0deg
-mask_file="/local/ITS3utils/DESY202311/masks/ref-plane2.txt"
+mask_file="../../../ITS3utils/DESY202311/masks/ref-plane2.txt"
 orientation = 0deg, 0deg, 0deg
 
 [ALPIDE_3]
@@ -55,7 +55,7 @@ material_budget = 0.0005
 coordinates = "cartesian"
 orientation_mode = "xyz"
 # orientation = 180deg, 180deg, 0deg
-mask_file="/local/ITS3utils/DESY202311/masks/ref-plane3.txt"
+mask_file="../../../ITS3utils/DESY202311/masks/ref-plane3.txt"
 orientation = 0deg, 0deg, 0deg
 
 [ALPIDE_4]
@@ -69,7 +69,7 @@ material_budget = 0.001
 coordinates = "cartesian"
 orientation_mode = "xyz"
 # orientation = 180deg, 180deg, 0deg
-mask_file="/local/ITS3utils/DESY202311/masks/ref-plane4.txt"
+mask_file="../../../ITS3utils/DESY202311/masks/ref-plane4.txt"
 orientation = 0deg, 0deg, 0deg
 
 [ALPIDE_5]
@@ -83,7 +83,7 @@ material_budget = 0.0005
 coordinates = "cartesian"
 orientation_mode = "xyz"
 # orientation = 180deg, 180deg, 0deg
-mask_file="/local/ITS3utils/DESY202311/masks/ref-plane5.txt"
+mask_file="../../../ITS3utils/DESY202311/masks/ref-plane5.txt"
 orientation = 0deg, 0deg, 0deg
 
 [CE65_6]
